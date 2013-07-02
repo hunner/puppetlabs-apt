@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe 'apt::key', :type => :define do
   let :title do
-    '8347A27F'
+    '1C4CBDCDCD2EFD2A'
   end
 
   let :default_params do
@@ -62,13 +62,13 @@ describe 'apt::key', :type => :define do
           should contain_anchor("apt::key #{param_hash[:key]} present")
           should contain_exec(digest).with({
             "path"    => "/bin:/usr/bin",
-            "unless"  => "/usr/bin/apt-key list | /bin/grep -E '#{param_hash[:key]}.*\\[expires:'"
+            "unless"  => "/usr/bin/apt-key list | /bin/grep -E '#{param_hash[:key][-8..-1]}.*\\[expires:'"
           })
         elsif [:absent, 'absent'].include? param_hash[:ensure]
           should_not contain_anchor("apt::key #{param_hash[:key]} present")
           should contain_exec("apt::key #{param_hash[:key]} absent").with({
             "path"    => "/bin:/usr/bin",
-            "onlyif"  => "apt-key list | grep '#{param_hash[:key]}'",
+            "onlyif"  => "apt-key list | grep '#{param_hash[:key][-8..-1]}'",
             "command" => "apt-key del '#{param_hash[:key]}'"
           })
         else
