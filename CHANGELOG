@@ -1,3 +1,15 @@
+2014-02-14 2.0.0
+Summary:
+This release adds `ensure` in `apt::ppa` and changing the default release in
+`apt::force` to none. This latter change is backwards-incompatible, but very
+minor.
+
+Backwards-Incompatible:
+- Change default value of `apt::force` from `'testing'` to `false`
+
+Features:
+- Add `ensure` to apt::ppa for absent use case
+
 2014-02-13 1.4.1
 Summary:
 This is a bugfix release.
